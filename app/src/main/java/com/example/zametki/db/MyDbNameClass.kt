@@ -6,13 +6,17 @@ object MyDbNameClass : BaseColumns {
     const val TABLE_NAME = "my_table"
     const val COLUMN_NAME_TITLE = "title"
     const val COLUMN_NAME_CONTENT = "content"
+    const val COLUMN_NAME_STAR = "star"
+    const val COLUMN_NAME_PASS = "pass"
 
-    const val DATABASE_VERSION = 1
+    const val DATABASE_VERSION = 2
     const val DATABASE_NAME = "Zametki.db"
 
     const val CREATE_TABLE  = "CREATE TABLE $TABLE_NAME (" +
-                                "${BaseColumns._ID} INTEGER PRIMARY KEY," +
-                                "$COLUMN_NAME_TITLE TEXT," +
-                                "$COLUMN_NAME_CONTENT TEXT)"
+            "${BaseColumns._ID} INTEGER PRIMARY KEY," +
+            "$COLUMN_NAME_TITLE TEXT," +
+            "$COLUMN_NAME_CONTENT TEXT," +
+            "$COLUMN_NAME_STAR INTEGER," +
+            "$COLUMN_NAME_PASS TEXT)"
     const val DELETE_TABLE = "DROP TABLE IF EXISTS $TABLE_NAME"
 }

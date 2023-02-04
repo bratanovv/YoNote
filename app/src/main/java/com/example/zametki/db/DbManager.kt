@@ -3,7 +3,6 @@ package com.example.zametki.db
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import android.provider.BaseColumns
 
 class DbManager( context: Context) {
 
@@ -13,10 +12,12 @@ class DbManager( context: Context) {
     fun openDb(){
         db = dbHelper.writableDatabase
     }
-    fun insertToDb( title: String, content:String){
+    fun insertToDb( title: String, desc: String, star: Int, pass: String){
         val values = ContentValues().apply {
-            put(MyDbNameClass.COLUMN_NAME_TITLE, title)
-            put(MyDbNameClass.COLUMN_NAME_CONTENT, content)
+            put(MyDbNameClass.COLUMN_NAME_TITLE, title)    //name
+            put(MyDbNameClass.COLUMN_NAME_CONTENT, desc)   //description/content
+            put(MyDbNameClass.COLUMN_NAME_STAR, star)      //marcked/unmarcked
+            put(MyDbNameClass.COLUMN_NAME_PASS, pass)      //pass
         }
         db?.insert(MyDbNameClass.TABLE_NAME, null, values)
     }
