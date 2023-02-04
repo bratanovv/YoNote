@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/material_on_primary_emphasis_high_type"
     android:padding="10dp"
+    android:visibility="visible"
     tools:context=".EditActivity">
 
     <EditText
@@ -18,7 +19,7 @@
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/menueLayout" />
 
     <EditText
         android:id="@+id/edDesc"
@@ -51,16 +52,101 @@
         app:srcCompat="@android:drawable/ic_menu_save" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fbAddPic"
+        android:id="@+id/fbAddMenue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:alpha="0.8"
         android:clickable="true"
         android:contentDescription="Press to add photo"
+        android:onClick="onClickAddMenue"
         app:backgroundTint="@android:color/holo_orange_light"
         app:layout_constraintBottom_toTopOf="@+id/fbSave"
         app:layout_constraintEnd_toEndOf="@+id/fbSave"
-        app:srcCompat="@android:drawable/ic_menu_gallery" />
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/menueLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintEnd_toEndOf="@+id/edName"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/edName"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <ImageButton
+            android:id="@+id/ibDelete"
+            android:layout_width="80dp"
+            android:layout_height="55dp"
+            android:backgroundTint="@color/white"
+            android:contentDescription="Press to do smth"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ibSave"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_delete"
+            app:tint="@android:color/holo_orange_light" />
+
+        <ImageButton
+            android:id="@+id/ibLock"
+            android:layout_width="80dp"
+            android:layout_height="55dp"
+            android:backgroundTint="@color/white"
+            android:contentDescription="Press to do smth"
+            android:onClick="onClickLock"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_lock_open"
+            app:tint="@android:color/holo_orange_light" />
+
+        <ImageButton
+            android:id="@+id/ibHideMenue"
+            android:layout_width="80dp"
+            android:layout_height="55dp"
+            android:backgroundTint="@color/white"
+            android:contentDescription="Press to hide menue"
+            android:onClick="onClickHideMenue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ibStar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_hide"
+            app:tint="@android:color/holo_orange_light" />
+
+        <ImageButton
+            android:id="@+id/ibSave"
+            android:layout_width="75dp"
+            android:layout_height="55dp"
+            android:backgroundTint="@color/white"
+            android:contentDescription="Press to do smth"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ibHideMenue"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_save"
+            app:tint="@android:color/holo_orange_light" />
+
+        <ImageButton
+            android:id="@+id/ibStar"
+            android:layout_width="80dp"
+            android:layout_height="55dp"
+            android:backgroundTint="@color/white"
+            android:contentDescription="Press to do smth"
+            android:onClick="onClickStar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ibLock"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_star_half"
+            app:tint="@android:color/holo_orange_light" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.08" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
