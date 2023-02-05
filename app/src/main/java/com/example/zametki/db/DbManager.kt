@@ -12,12 +12,13 @@ class DbManager( context: Context) {
     fun openDb(){
         db = dbHelper.writableDatabase
     }
-    fun insertToDb( title: String, desc: String, star: Int, pass: String){
+    fun insertToDb( title: String, desc: String, star: Int, pass: String, date: String){
         val values = ContentValues().apply {
             put(MyDbNameClass.COLUMN_NAME_TITLE, title)    //name
             put(MyDbNameClass.COLUMN_NAME_CONTENT, desc)   //description/content
             put(MyDbNameClass.COLUMN_NAME_STAR, star)      //marcked/unmarcked
             put(MyDbNameClass.COLUMN_NAME_PASS, pass)      //pass
+            put(MyDbNameClass.COLUMN_NAME_DATE, date)
         }
         db?.insert(MyDbNameClass.TABLE_NAME, null, values)
     }

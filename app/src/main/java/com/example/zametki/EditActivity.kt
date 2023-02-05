@@ -5,6 +5,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.zametki.db.DbManager
 import kotlinx.android.synthetic.main.edit_activity.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class EditActivity : AppCompatActivity() {
 
@@ -79,8 +81,15 @@ class EditActivity : AppCompatActivity() {
 
 
         if(!t.isEmpty()){
-          dbManager.insertToDb(titleText,descText,star,password)
+          dbManager.insertToDb(titleText, descText, star, password,getDate())
         }
+    }
+
+    fun getDate():String{
+        val calendar = Calendar.getInstance()
+        val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm")
+        val formattedDate: String = formatter.format(calendar.time)
+        return formattedDate
     }
 
 }
