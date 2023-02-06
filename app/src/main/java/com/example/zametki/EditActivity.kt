@@ -112,6 +112,7 @@ class EditActivity : AppCompatActivity() {
                 }
                 if(!i.getStringExtra(IntentConstants.I_PASS_KEY).equals("empty")){
                     locked = true
+                    password = "not empty"
                     ibLock.setImageResource(R.drawable.ic_lock_close)
                 }
 
