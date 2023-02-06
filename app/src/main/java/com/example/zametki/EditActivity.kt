@@ -96,6 +96,7 @@ class EditActivity : AppCompatActivity() {
         val formattedDate: String = formatter.format(calendar.time)
         return formattedDate
     }
+    //andr
 
     fun getIntents(){
         val i = intent
