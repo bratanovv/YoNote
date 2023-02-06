@@ -20,5 +20,8 @@ object MyDbNameClass : BaseColumns {
             "$COLUMN_NAME_STAR INTEGER," +
             "$COLUMN_NAME_PASS TEXT," +
             "$COLUMN_NAME_DATE TEXT)"
+
     const val DELETE_TABLE = "DROP TABLE IF EXISTS $TABLE_NAME"
+
+    const val SORT_TABLE = "Select * from $TABLE_NAME order by $COLUMN_NAME_DATE"
 }

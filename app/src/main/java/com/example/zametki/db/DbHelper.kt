@@ -13,6 +13,11 @@ class DbHelper(context: Context) :SQLiteOpenHelper(context, MyDbNameClass.DATABA
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL(MyDbNameClass.DELETE_TABLE)
         onCreate(db)
+
     }
+
+//    fun sortTable(db: SQLiteDatabase?) {
+//        db?.execSQL(MyDbNameClass.SORT_TABLE)
+//    }
 
 }

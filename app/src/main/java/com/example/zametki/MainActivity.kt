@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.zametki.db.DbItem
 import com.example.zametki.db.DbManager
 import com.example.zametki.db.DbViewAdapter
 import kotlinx.android.synthetic.main.activity_main.*
@@ -13,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     val dbManager = DbManager(this)
-    val dbViewAdapter = DbViewAdapter(ArrayList())
+    val dbViewAdapter = DbViewAdapter(ArrayList(),this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         dbManager.openDb()
+
 
         var dbList = dbManager.readDbData()
 
@@ -48,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         rcView.adapter = dbViewAdapter
     }
 
-    fun fillViewAdapter(listLtems:List<String>){
+    fun fillViewAdapter(listLtems:List<DbItem>){
 
         dbViewAdapter.upgradeAdapter(listLtems)
 

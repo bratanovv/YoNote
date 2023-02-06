@@ -11,6 +11,7 @@ class DbManager( context: Context) {
 
     fun openDb(){
         db = dbHelper.writableDatabase
+
     }
     fun insertToDb( title: String, desc: String, star: Int, pass: String, date: String){
         val values = ContentValues().apply {
@@ -22,8 +23,8 @@ class DbManager( context: Context) {
         }
         db?.insert(MyDbNameClass.TABLE_NAME, null, values)
     }
-    fun readDbData() :ArrayList<String>{
-        val dataList = ArrayList<String>()
+    fun readDbData() :ArrayList<DbItem>{
+        val dataList = ArrayList<DbItem>()
 
         val cursor = db?.query(
             MyDbNameClass.TABLE_NAME,   // The table to query
@@ -32,14 +33,22 @@ class DbManager( context: Context) {
             null,          // The values for the WHERE clause
             null,                   // don't group the rows
             null,                   // don't filter by row groups
-            null               // The sort order
+            MyDbNameClass.COLUMN_NAME_DATE+" DESC"          // The sort order
         )
 
 
             while (cursor?.moveToNext()!!) {
-                val dataText = cursor.getString(cursor.getColumnIndexOrThrow(MyDbNameClass.COLUMN_NAME_TITLE))
-                dataList.add(dataText.toString())
+
+                val dataTitle = cursor.getString(cursor.getColumnIndexOrThrow(MyDbNameClass.COLUMN_NAME_TITLE)).toString()
+                val dataContent = cursor.getString(cursor.getColumnIndexOrThrow(MyDbNameClass.COLUMN_NAME_CONTENT)).toString()
+                val dataStar = cursor.getInt(cursor.getColumnIndexOrThrow(MyDbNameClass.COLUMN_NAME_STAR))
+                val dataPass = cursor.getString(cursor.getColumnIndexOrThrow(MyDbNameClass.COLUMN_NAME_PASS)).toString()
+                val dataDate = cursor.getString(cursor.getColumnIndexOrThrow(MyDbNameClass.COLUMN_NAME_DATE)).toString()
+
+                dataList.add(DbItem(dataTitle,dataContent,dataStar,dataPass,dataDate))
+
             }
+
         cursor.close()
         return dataList
     }
