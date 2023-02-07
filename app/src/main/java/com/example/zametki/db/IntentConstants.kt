@@ -6,4 +6,5 @@ object IntentConstants {
     const val I_STAR_KEY = "star_key"
     const val I_PASS_KEY = "pass_key"
     const val I_DATE_KEY = "date_key"
+    const val I_ID_KEY = "id_key"
 }

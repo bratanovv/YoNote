@@ -84,6 +84,7 @@
             android:layout_height="55dp"
             android:backgroundTint="@color/white"
             android:contentDescription="Press to do smth"
+            android:onClick="onClickDelete"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ibSave"
             app:layout_constraintStart_toStartOf="parent"

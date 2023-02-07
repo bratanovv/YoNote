@@ -42,6 +42,7 @@ class DbViewAdapter(list:ArrayList<DbItem>,context:Context): RecyclerView.Adapte
                     putExtra(IntentConstants.I_CONTENT_KEY,item.content)
                     putExtra(IntentConstants.I_STAR_KEY,item.star)
                     putExtra(IntentConstants.I_PASS_KEY,item.pass)          // лучше бы не сам пароль
+                    putExtra(IntentConstants.I_ID_KEY,item.id)
                 }
                 contextV.startActivity(intent)
             }
@@ -67,4 +68,12 @@ class DbViewAdapter(list:ArrayList<DbItem>,context:Context): RecyclerView.Adapte
         this.listItems.addAll(listItems)
         notifyDataSetChanged()
     }
+    fun removeItem(position: Int, dbManager: DbManager){
+        dbManager.removeItemFromDb(this.listItems[position].id.toString())
+        this.listItems.removeAt(position)
+        notifyItemRangeChanged(0,listItems.size)
+        notifyItemRemoved(position)
+    }
+
+
 }

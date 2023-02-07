@@ -3,6 +3,7 @@ package com.example.zametki.db
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import android.provider.BaseColumns
 
 class DbManager( context: Context) {
 
@@ -22,6 +23,12 @@ class DbManager( context: Context) {
             put(MyDbNameClass.COLUMN_NAME_DATE, date)
         }
         db?.insert(MyDbNameClass.TABLE_NAME, null, values)
+    }
+
+    fun removeItemFromDb( id :String){
+        val selection = BaseColumns._ID+"=$id"
+
+        db?.delete(MyDbNameClass.TABLE_NAME, selection,null)
     }
     fun readDbData() :ArrayList<DbItem>{
         val dataList = ArrayList<DbItem>()
@@ -44,8 +51,9 @@ class DbManager( context: Context) {
                 val dataStar = cursor.getInt(cursor.getColumnIndexOrThrow(MyDbNameClass.COLUMN_NAME_STAR))
                 val dataPass = cursor.getString(cursor.getColumnIndexOrThrow(MyDbNameClass.COLUMN_NAME_PASS)).toString()
                 val dataDate = cursor.getString(cursor.getColumnIndexOrThrow(MyDbNameClass.COLUMN_NAME_DATE)).toString()
+                val dataId = cursor.getInt(cursor.getColumnIndexOrThrow(BaseColumns._ID))
 
-                dataList.add(DbItem(dataTitle,dataContent,dataStar,dataPass,dataDate))
+                dataList.add(DbItem(dataId,dataTitle,dataContent,dataStar,dataPass,dataDate))
 
             }
 

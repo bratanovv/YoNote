@@ -23,5 +23,5 @@ object MyDbNameClass : BaseColumns {
 
     const val DELETE_TABLE = "DROP TABLE IF EXISTS $TABLE_NAME"
 
-    const val SORT_TABLE = "Select * from $TABLE_NAME order by $COLUMN_NAME_DATE"
+
 }
