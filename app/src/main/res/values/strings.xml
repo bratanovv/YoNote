@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Zametki</string>
+    <string name="app_name">yoNote</string>
     <string name="app_ed_title_hint">Название</string>
     <string name="app_ed_desc_hint">Текст</string>
 </resources>
