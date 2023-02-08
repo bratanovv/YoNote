@@ -4,6 +4,7 @@ package com.example.zametki
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         init()
+        initSearchView()
     }
 
     override fun onResume() {
@@ -31,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         dbManager.openDb()
 
 
-        var dbList = dbManager.readDbData()
+        var dbList = dbManager.readDbData("")
 
         isEmptyDb(dbList)
 
@@ -60,6 +62,20 @@ class MainActivity : AppCompatActivity() {
         rcView.adapter = dbViewAdapter
     }
 
+    private fun initSearchView(){
+        searchView.setOnQueryTextListener(object:SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                val dbList = dbManager.readDbData(p0!!)
+                fillViewAdapter(dbList)
+                return true
+            }
+        })
+    }
+
     fun fillViewAdapter(listLtems:List<DbItem>){
 
         dbViewAdapter.upgradeAdapter(listLtems)
@@ -80,7 +96,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 dbViewAdapter.removeItem(viewHolder.adapterPosition,dbManager)
-                isEmptyDb(dbManager.readDbData())
+                isEmptyDb(dbManager.readDbData(""))
                 Toast.makeText(this@MainActivity,"Заметка удалена", Toast.LENGTH_SHORT).show()
             }
             // swipe decor

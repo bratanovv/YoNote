@@ -30,16 +30,17 @@ class DbManager( context: Context) {
 
         db?.delete(MyDbNameClass.TABLE_NAME, selection,null)
     }
-    fun readDbData() :ArrayList<DbItem>{
+    fun readDbData(searchText:String) :ArrayList<DbItem>{
         val dataList = ArrayList<DbItem>()
+        val selection = "${MyDbNameClass.COLUMN_NAME_TITLE} like ?"
 
         val cursor = db?.query(
-            MyDbNameClass.TABLE_NAME,   // The table to query
-            null,             // The array of columns to return (pass null to get all)
-            null,              // The columns for the WHERE clause
-            null,          // The values for the WHERE clause
-            null,                   // don't group the rows
-            null,                   // don't filter by row groups
+            MyDbNameClass.TABLE_NAME,     // The table to query
+            null,                 // The array of columns to return (pass null to get all)
+            selection,                    // The columns for the WHERE clause
+            arrayOf("%$searchText%"),     // The values for the WHERE clause
+            null,                 // don't group the rows
+            null,                  // don't filter by row groups
             MyDbNameClass.COLUMN_NAME_DATE+" DESC"          // The sort order
         )
 

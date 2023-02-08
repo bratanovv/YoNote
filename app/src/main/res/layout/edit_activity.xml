@@ -13,11 +13,14 @@
         android:id="@+id/edName"
         android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_marginTop="4dp"
         android:ems="10"
         android:hint="@string/app_ed_title_hint"
         android:inputType="textPersonName"
         android:padding="10dp"
+        android:textCursorDrawable="@drawable/cursor_c"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/menueLayout" />
 
@@ -32,6 +35,7 @@
         android:inputType="textMultiLine|textPersonName"
         android:padding="10dp"
         android:scrollbars="vertical"
+        android:textCursorDrawable="@drawable/cursor_c"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
