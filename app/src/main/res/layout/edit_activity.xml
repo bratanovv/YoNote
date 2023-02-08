@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/material_on_primary_emphasis_high_type"
+    android:background="@color/white"
     android:padding="10dp"
     android:visibility="visible"
+    android:focusableInTouchMode="true"
     tools:context=".EditActivity">
 
     <EditText
@@ -16,9 +17,10 @@
         android:layout_marginTop="4dp"
         android:ems="10"
         android:hint="@string/app_ed_title_hint"
+        android:focusableInTouchMode="true"
         android:inputType="textPersonName"
         android:padding="10dp"
-        android:textCursorDrawable="@drawable/cursor_c"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,14 +30,14 @@
         android:id="@+id/edDesc"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/material_on_primary_emphasis_high_type"
+        android:background="@color/white"
         android:ems="10"
         android:gravity="top"
         android:hint="@string/app_ed_desc_hint"
         android:inputType="textMultiLine|textPersonName"
         android:padding="10dp"
         android:scrollbars="vertical"
-        android:textCursorDrawable="@drawable/cursor_c"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -82,15 +84,23 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.2"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <ImageButton
             android:id="@+id/ibDelete"
-            android:layout_width="80dp"
-            android:layout_height="55dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:backgroundTint="@color/white"
             android:contentDescription="Press to do smth"
             android:onClick="onClickDelete"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ibSave"
+            app:layout_constraintEnd_toStartOf="@+id/guideline1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_delete"
@@ -98,55 +108,86 @@
 
         <ImageButton
             android:id="@+id/ibLock"
-            android:layout_width="80dp"
-            android:layout_height="55dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:backgroundTint="@color/white"
             android:contentDescription="Press to do smth"
             android:onClick="onClickLock"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ibStar"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_lock_open"
             app:tint="@android:color/holo_orange_light" />
 
         <ImageButton
             android:id="@+id/ibHideMenue"
-            android:layout_width="80dp"
-            android:layout_height="55dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:backgroundTint="@color/white"
             android:contentDescription="Press to hide menue"
             android:onClick="onClickHideMenue"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ibStar"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_hide"
             app:tint="@android:color/holo_orange_light" />
 
         <ImageButton
             android:id="@+id/ibSave"
-            android:layout_width="75dp"
-            android:layout_height="55dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:backgroundTint="@color/white"
             android:contentDescription="Press to do smth"
             android:onClick="onClickSave"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ibHideMenue"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline1"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_save"
             app:tint="@android:color/holo_orange_light" />
 
         <ImageButton
             android:id="@+id/ibStar"
-            android:layout_width="80dp"
-            android:layout_height="55dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:backgroundTint="@color/white"
             android:contentDescription="Press to do smth"
             android:onClick="onClickStar"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ibLock"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
+            app:layout_constraintStart_toEndOf="@+id/ibHideMenue"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_star_half"
             app:tint="@android:color/holo_orange_light" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.4" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="57dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintGuide_percent="0.60" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.8" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.Guideline

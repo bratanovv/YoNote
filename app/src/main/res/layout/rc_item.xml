@@ -5,10 +5,10 @@
     android:id="@+id/clMainLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:background="@android:drawable/editbox_background_normal"
-    android:backgroundTint="@android:color/background_light">
+    android:layout_marginLeft="4dp"
+    android:layout_marginRight="-3dp"
+    android:background="@android:drawable/editbox_background"
+    android:backgroundTint="@color/white">
 
     <TextView
         android:id="@+id/tvTitle"

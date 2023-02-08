@@ -2,17 +2,20 @@ package com.example.zametki
 
 //import android.R
 import android.content.Intent
+import android.graphics.Canvas
 import android.os.Bundle
 import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zametki.db.DbItem
 import com.example.zametki.db.DbManager
 import com.example.zametki.db.DbViewAdapter
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -20,6 +23,8 @@ class MainActivity : AppCompatActivity() {
 
     val dbManager = DbManager(this)
     val dbViewAdapter = DbViewAdapter(ArrayList(),this)
+    var   marcked = false
+    var dbList = ArrayList<DbItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         dbManager.openDb()
 
 
-        var dbList = dbManager.readDbData("")
+         dbList = dbManager.readDbData("",false)
 
         isEmptyDb(dbList)
 
@@ -69,7 +74,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                val dbList = dbManager.readDbData(p0!!)
+                 dbList = dbManager.readDbData(p0!!,marcked)
                 fillViewAdapter(dbList)
                 return true
             }
@@ -96,53 +101,73 @@ class MainActivity : AppCompatActivity() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 dbViewAdapter.removeItem(viewHolder.adapterPosition,dbManager)
-                isEmptyDb(dbManager.readDbData(""))
+                isEmptyDb(dbManager.readDbData("",false))
                 Toast.makeText(this@MainActivity,"Заметка удалена", Toast.LENGTH_SHORT).show()
             }
             // swipe decor
-//            val backgroundCol =  ContextCompat.getColor(
-//                this@MainActivity,
-//                R.color.colourForRV)
-//            val icoCol =  ContextCompat.getColor(
-//                this@MainActivity,
-//                R.color.colourForRed)
-//            override fun onChildDraw(
-//                c: Canvas,
-//                recyclerView: RecyclerView,
-//                viewHolder: RecyclerView.ViewHolder,
-//                dX: Float,
-//                dY: Float,
-//                actionState: Int,
-//                isCurrentlyActive: Boolean
-//            ) {
-//                RecyclerViewSwipeDecorator.Builder(
-//                    c,
-//                    recyclerView,
-//                    viewHolder,
-//                    dX,
-//                    dY,
-//                    actionState,
-//                    isCurrentlyActive
-//                )
-//                    .addBackgroundColor(icoCol)
-//                    .addActionIcon(R.drawable.ic_delete)
-//                   // .setActionIconTint(backgroundCol)
-//                    .addCornerRadius(1,3)
-//                    .addPadding(1, 3F,4F,3F)
-//                    .create()
-//                    .decorate()
-//                super.onChildDraw(
-//                    c,
-//                    recyclerView,
-//                    viewHolder,
-//                    dX,
-//                    dY,
-//                    actionState,
-//                    isCurrentlyActive
-//                )
-//            }
+            val backgroundCol =  ContextCompat.getColor(
+                this@MainActivity,
+                R.color.colourForRV)
+            val icoCol =  ContextCompat.getColor(
+                this@MainActivity,
+                R.color.colourForRed)
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                RecyclerViewSwipeDecorator.Builder(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+                    .addBackgroundColor(icoCol)
+                    .addActionIcon(R.drawable.ic_delete)
+                   // .setActionIconTint(backgroundCol)
+                    .addCornerRadius(1,3)
+                    .addPadding(1, 3F,4F,3F)
+                    .create()
+                    .decorate()
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+            }
             // swipe decor
         })
+    }
+
+
+    fun onClickStarFilter(view: View) {
+        if (!marcked){
+            ibStarFilter.setImageResource(R.drawable.ic_star)
+            marcked = true
+            val corrDbList =ArrayList<DbItem>()
+            for (item: DbItem in dbList){
+                if(item.star==1)
+                    corrDbList.add(item)
+            }
+            fillViewAdapter(corrDbList)
+        }
+        else{
+            marcked=false
+            ibStarFilter.setImageResource(R.drawable.ic_star_half)
+            fillViewAdapter(dbList)
+        }
+
     }
 
 

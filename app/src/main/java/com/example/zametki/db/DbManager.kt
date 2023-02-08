@@ -30,9 +30,9 @@ class DbManager( context: Context) {
 
         db?.delete(MyDbNameClass.TABLE_NAME, selection,null)
     }
-    fun readDbData(searchText:String) :ArrayList<DbItem>{
+    fun readDbData(searchText:String , marcked: Boolean) :ArrayList<DbItem>{
         val dataList = ArrayList<DbItem>()
-        val selection = "${MyDbNameClass.COLUMN_NAME_TITLE} like ?"
+        val selection = "${MyDbNameClass.COLUMN_NAME_TITLE} like ? "
 
         val cursor = db?.query(
             MyDbNameClass.TABLE_NAME,     // The table to query
@@ -53,7 +53,7 @@ class DbManager( context: Context) {
                 val dataPass = cursor.getString(cursor.getColumnIndexOrThrow(MyDbNameClass.COLUMN_NAME_PASS)).toString()
                 val dataDate = cursor.getString(cursor.getColumnIndexOrThrow(MyDbNameClass.COLUMN_NAME_DATE)).toString()
                 val dataId = cursor.getInt(cursor.getColumnIndexOrThrow(BaseColumns._ID))
-
+                if((marcked && dataStar==1) || !marcked)
                 dataList.add(DbItem(dataId,dataTitle,dataContent,dataStar,dataPass,dataDate))
 
             }
