@@ -22,8 +22,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     val dbManager = DbManager(this)
-    val dbViewAdapter = DbViewAdapter(ArrayList(),this)
-    var   marcked = false
+    val dbViewAdapter = DbViewAdapter(ArrayList(), this)
+    var marcked = false
     var dbList = ArrayList<DbItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         dbManager.openDb()
 
 
-         dbList = dbManager.readDbData("",false)
+        dbList = dbManager.readDbData("", false)
 
         isEmptyDb(dbList)
 
@@ -50,46 +50,46 @@ class MainActivity : AppCompatActivity() {
         dbManager.closeDB()
     }
 
-    fun isEmptyDb(list:List<DbItem>){
-        if (list.size!=0) tvNoElements.visibility = View.INVISIBLE
+    fun isEmptyDb(list: List<DbItem>) {
+        if (list.size != 0) tvNoElements.visibility = View.INVISIBLE
         else tvNoElements.visibility = View.VISIBLE
     }
 
     fun onClickNew(view: View) {
-        val i = Intent(this,EditActivity::class.java)
+        val i = Intent(this, EditActivity::class.java)
         startActivity(i)
     }
 
-    fun init(){
+    fun init() {
         rcView.layoutManager = LinearLayoutManager(this)
         val swipeHelper = getSwipeMg()
         swipeHelper.attachToRecyclerView(rcView)
         rcView.adapter = dbViewAdapter
     }
 
-    private fun initSearchView(){
-        searchView.setOnQueryTextListener(object:SearchView.OnQueryTextListener{
+    private fun initSearchView() {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 TODO("Not yet implemented")
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                 dbList = dbManager.readDbData(p0!!,marcked)
+                dbList = dbManager.readDbData(p0!!, marcked)
                 fillViewAdapter(dbList)
                 return true
             }
         })
     }
 
-    fun fillViewAdapter(listLtems:List<DbItem>){
+    fun fillViewAdapter(listLtems: List<DbItem>) {
 
         dbViewAdapter.upgradeAdapter(listLtems)
 
     }
 
-    private fun getSwipeMg() : ItemTouchHelper{
-        return ItemTouchHelper(object:ItemTouchHelper.
-        SimpleCallback(0,ItemTouchHelper.RIGHT){
+    private fun getSwipeMg(): ItemTouchHelper {
+        return ItemTouchHelper(object : ItemTouchHelper.
+        SimpleCallback(0, ItemTouchHelper.RIGHT) {
 
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -100,17 +100,21 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                dbViewAdapter.removeItem(viewHolder.adapterPosition,dbManager)
-                isEmptyDb(dbManager.readDbData("",false))
-                Toast.makeText(this@MainActivity,"Заметка удалена", Toast.LENGTH_SHORT).show()
+                dbViewAdapter.removeItem(viewHolder.adapterPosition, dbManager)
+                isEmptyDb(dbManager.readDbData("", false))
+                Toast.makeText(this@MainActivity, "Заметка удалена", Toast.LENGTH_SHORT).show()
             }
+
             // swipe decor
-            val backgroundCol =  ContextCompat.getColor(
+            val backgroundCol = ContextCompat.getColor(
                 this@MainActivity,
-                R.color.colourForRV)
-            val icoCol =  ContextCompat.getColor(
+                R.color.colourForRV
+            )
+            val icoCol = ContextCompat.getColor(
                 this@MainActivity,
-                R.color.colourForRed)
+                R.color.colourForRed
+            )
+
             override fun onChildDraw(
                 c: Canvas,
                 recyclerView: RecyclerView,
@@ -131,9 +135,9 @@ class MainActivity : AppCompatActivity() {
                 )
                     .addBackgroundColor(icoCol)
                     .addActionIcon(R.drawable.ic_delete)
-                   // .setActionIconTint(backgroundCol)
-                    .addCornerRadius(1,3)
-                    .addPadding(1, 3F,4F,3F)
+                    // .setActionIconTint(backgroundCol)
+                    .addCornerRadius(1, 3)
+                    .addPadding(1, 3F, 4F, 3F)
                     .create()
                     .decorate()
                 super.onChildDraw(
@@ -152,18 +156,17 @@ class MainActivity : AppCompatActivity() {
 
 
     fun onClickStarFilter(view: View) {
-        if (!marcked){
+        if (!marcked) {
             ibStarFilter.setImageResource(R.drawable.ic_star)
             marcked = true
-            val corrDbList =ArrayList<DbItem>()
-            for (item: DbItem in dbList){
-                if(item.star==1)
+            val corrDbList = ArrayList<DbItem>()
+            for (item: DbItem in dbList) {
+                if (item.star == 1)
                     corrDbList.add(item)
             }
             fillViewAdapter(corrDbList)
-        }
-        else{
-            marcked=false
+        } else {
+            marcked = false
             ibStarFilter.setImageResource(R.drawable.ic_star_half)
             fillViewAdapter(dbList)
         }

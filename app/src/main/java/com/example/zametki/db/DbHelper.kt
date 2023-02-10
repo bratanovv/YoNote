@@ -4,7 +4,8 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
-class DbHelper(context: Context) :SQLiteOpenHelper(context, MyDbNameClass.DATABASE_NAME, null, MyDbNameClass.DATABASE_VERSION) {
+class DbHelper(context: Context) :
+    SQLiteOpenHelper(context, MyDbNameClass.DATABASE_NAME, null, MyDbNameClass.DATABASE_VERSION) {
     override fun onCreate(db: SQLiteDatabase?) {
 
         db?.execSQL(MyDbNameClass.CREATE_TABLE)
@@ -16,8 +17,6 @@ class DbHelper(context: Context) :SQLiteOpenHelper(context, MyDbNameClass.DATABA
 
     }
 
-//    fun sortTable(db: SQLiteDatabase?) {
-//        db?.execSQL(MyDbNameClass.SORT_TABLE)
-//    }
+
 
 }
