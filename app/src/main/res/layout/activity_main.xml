@@ -48,6 +48,8 @@
 
     <SearchView
         android:id="@+id/searchView"
+        android:queryBackground="@color/colourForRV"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"

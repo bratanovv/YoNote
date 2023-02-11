@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         dbManager.openDb()
-
+        tvAppTitle.visibility = View.VISIBLE
         isEmptyDb(dbList)
 
         fillViewAdapter("",false)
@@ -70,12 +70,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initSearchView() {
+        searchView.setOnCloseListener(object : SearchView.OnCloseListener{
+            override fun onClose(): Boolean {
+                tvAppTitle.visibility = View.VISIBLE
+                return false
+            }
+
+        })
+
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
-                TODO("Not yet implemented")
+                fillViewAdapter(p0!!,marcked)
+                return true
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
+                tvAppTitle.visibility = View.INVISIBLE
                 fillViewAdapter(p0!!,marcked)
                 return true
             }
