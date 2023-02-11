@@ -17,6 +17,10 @@ import com.example.zametki.db.DbManager
 import com.example.zametki.db.DbViewAdapter
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     val dbViewAdapter = DbViewAdapter(ArrayList(), this)
     var marcked = false
     var dbList = ArrayList<DbItem>()
+    private var job : Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,12 +42,9 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         dbManager.openDb()
 
-
-        dbList = dbManager.readDbData("", false)
-
         isEmptyDb(dbList)
 
-        fillViewAdapter(dbList)
+        fillViewAdapter("",false)
     }
 
     override fun onDestroy() {
@@ -74,16 +76,24 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                dbList = dbManager.readDbData(p0!!, marcked)
-                fillViewAdapter(dbList)
+                fillViewAdapter(p0!!,marcked)
                 return true
             }
         })
     }
 
-    fun fillViewAdapter(listLtems: List<DbItem>) {
+    fun fillViewAdapter(str: String, marcked: Boolean) {
+        job?.cancel()
+        job = CoroutineScope(Dispatchers.Main).launch {
+            dbList = dbManager.readDbData(str, marcked)
+            isEmptyDb(dbList)
+            dbViewAdapter.upgradeAdapter(dbList)
+        }
 
-        dbViewAdapter.upgradeAdapter(listLtems)
+    }
+    fun fillViewAdapter(listItems: List<DbItem>) {
+        isEmptyDb(listItems)
+        dbViewAdapter.upgradeAdapter(listItems)
 
     }
 
@@ -101,7 +111,8 @@ class MainActivity : AppCompatActivity() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 dbViewAdapter.removeItem(viewHolder.adapterPosition, dbManager)
-                isEmptyDb(dbManager.readDbData("", false))
+                dbList.removeAt(direction)
+                isEmptyDb(dbList)
                 Toast.makeText(this@MainActivity, "Заметка удалена", Toast.LENGTH_SHORT).show()
             }
 
@@ -172,7 +183,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
 
 }
 

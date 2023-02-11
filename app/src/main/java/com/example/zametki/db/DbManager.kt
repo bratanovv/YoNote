@@ -4,6 +4,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.provider.BaseColumns
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class DbManager(context: Context) {
 
@@ -15,7 +17,7 @@ class DbManager(context: Context) {
 
     }
 
-    fun insertToDb(title: String, desc: String, star: Int, pass: String, date: String) {
+    suspend fun insertToDb(title: String, desc: String, star: Int, pass: String, date: String) = withContext(Dispatchers.IO) {
         val values = ContentValues().apply {
             put(MyDbNameClass.COLUMN_NAME_TITLE, title)    //name
             put(MyDbNameClass.COLUMN_NAME_CONTENT, desc)   //description/content
@@ -32,14 +34,7 @@ class DbManager(context: Context) {
         db?.delete(MyDbNameClass.TABLE_NAME, selection, null)
     }
 
-    fun updateItemtoDb(
-        title: String,
-        desc: String,
-        star: Int,
-        pass: String,
-        date: String,
-        id: String
-    ) {
+    suspend fun updateItemtoDb(title: String, desc: String, star: Int, pass: String, date: String, id: String) = withContext(Dispatchers.IO) {
         val values = ContentValues().apply {
             put(MyDbNameClass.COLUMN_NAME_TITLE, title)    //name
             put(MyDbNameClass.COLUMN_NAME_CONTENT, desc)   //description/content
@@ -51,7 +46,7 @@ class DbManager(context: Context) {
         db?.update(MyDbNameClass.TABLE_NAME, values, selection, null)
     }
 
-    fun readDbData(searchText: String, marcked: Boolean): ArrayList<DbItem> {
+   suspend fun readDbData(searchText: String, marcked: Boolean): ArrayList<DbItem> = withContext(Dispatchers.IO) {
         val dataList = ArrayList<DbItem>()
         val selection = "${MyDbNameClass.COLUMN_NAME_TITLE} like ? "
 
@@ -89,7 +84,7 @@ class DbManager(context: Context) {
         }
 
         cursor.close()
-        return dataList
+         return@withContext dataList
     }
 
     fun closeDB() {

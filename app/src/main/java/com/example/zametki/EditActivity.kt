@@ -1,16 +1,28 @@
 package com.example.zametki
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.zametki.db.DbManager
 import com.example.zametki.db.IntentConstants
 import kotlinx.android.synthetic.main.edit_activity.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
 class EditActivity : AppCompatActivity() {
+
+    lateinit var dialog :Dialog
+
 
     var marcked = false    //STAR is on/off
     var locked = false     //LOCK is on/off
@@ -21,6 +33,7 @@ class EditActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.edit_activity)
+        dialog = Dialog(this)
         edDesc.isEnabled = true
         edName.isEnabled = true
         getIntents()
@@ -70,11 +83,38 @@ class EditActivity : AppCompatActivity() {
 
     fun onClickLock(view: View) {   //locking logix
         if (!locked) {
-            locked = true
-            password = "not empty"
-            ibLock.setImageResource(R.drawable.ic_lock_close)
+
+            dialog.setContentView(R.layout.pass_dialog)
+            dialog.window!!.setBackgroundDrawable( ColorDrawable(Color.TRANSPARENT))
+            dialog.setCancelable(true)
+            var passE :EditText = dialog.findViewById(R.id.edPass)
+            var bPass :Button = dialog.findViewById(R.id.bPass)
+
+            bPass.setOnClickListener(){
+                window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+
+                if(passE.text.isNotEmpty()){
+                    password = passE.text.toString()
+
+
+
+                    locked = true
+                    ibLock.setImageResource(R.drawable.ic_lock_close)
+
+                    Toast.makeText(this, "Установлен пароль", Toast.LENGTH_SHORT).show()
+                    dialog.cancel()
+                }else{
+                    Toast.makeText(this, "Пароль не введён", Toast.LENGTH_SHORT).show()
+                }
+
+
+            }
+
+            dialog.show()
+
         } else {
             locked = false
+            Toast.makeText(this, "Снят пароль", Toast.LENGTH_SHORT).show()
             password = "empty"
             ibLock.setImageResource(R.drawable.ic_lock_open)
         }
@@ -89,17 +129,26 @@ class EditActivity : AppCompatActivity() {
         if (marcked) star = 1
 
         if (!t.isEmpty()) {
-            if (id == -1)
-                dbManager.insertToDb(titleText, descText, star, password, getDate())
-            else
-                dbManager.updateItemtoDb(
-                    titleText,
-                    descText,
-                    star,
-                    password,
-                    getDate(),
-                    id.toString()
-                )
+
+            CoroutineScope(Dispatchers.Main).launch {
+                if (id == -1)
+                    dbManager.insertToDb(
+                        titleText,
+                        descText,
+                        star,
+                        password,
+                        getDate()
+                    )
+                else
+                    dbManager.updateItemtoDb(
+                        titleText,
+                        descText,
+                        star,
+                        password,
+                        getDate(),
+                        id.toString()
+                    )
+            }
 
             Toast.makeText(this, "Заметка cохранена", Toast.LENGTH_SHORT).show()
             finish()
@@ -122,6 +171,7 @@ class EditActivity : AppCompatActivity() {
             if (i.getStringExtra(IntentConstants.I_TITLE_KEY) != null) {
                 edName.setText(i.getStringExtra(IntentConstants.I_TITLE_KEY))
                 edDesc.setText(i.getStringExtra(IntentConstants.I_CONTENT_KEY))
+                password = i.getStringExtra(IntentConstants.I_PASS_KEY)!!
 
                 menueLayout.visibility = View.GONE
                 fbAddMenue.visibility = View.VISIBLE
@@ -129,18 +179,14 @@ class EditActivity : AppCompatActivity() {
                 edDesc.isEnabled = false
                 edName.isEnabled = false
 
-
-
-
                 id = i.getIntExtra(IntentConstants.I_ID_KEY, -1)
 
                 if (i.getIntExtra(IntentConstants.I_STAR_KEY, -1) > 0) {
                     ibStar.setImageResource(R.drawable.ic_star)
                     marcked = true
                 }
-                if (!i.getStringExtra(IntentConstants.I_PASS_KEY).equals("empty")) {
+                if (!password.equals("empty")) {
                     locked = true
-                    password = "not empty"
                     ibLock.setImageResource(R.drawable.ic_lock_close)
                 }
 
