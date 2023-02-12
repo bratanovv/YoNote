@@ -34,6 +34,10 @@ class EditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.edit_activity)
         dialog = Dialog(this)
+
+        fbSave.hide()
+        fbAddMenue.hide()
+
         edDesc.isEnabled = true
         edName.isEnabled = true
         getIntents()
@@ -52,8 +56,8 @@ class EditActivity : AppCompatActivity() {
 
     fun onClickAddMenue(view: View) {
         menueLayout.visibility = View.VISIBLE;
-        fbAddMenue.visibility = View.GONE
-        fbSave.visibility = View.GONE
+        fbAddMenue.hide()
+        fbSave.hide()
         edDesc.isEnabled = true
         edName.isEnabled = true
 
@@ -62,8 +66,8 @@ class EditActivity : AppCompatActivity() {
     fun onClickHideMenue(view: View) {
 
         menueLayout.visibility = View.GONE;
-        fbAddMenue.visibility = View.VISIBLE
-        fbSave.visibility = View.VISIBLE
+        fbAddMenue.show()
+        fbSave.show()
         edDesc.isEnabled = false
         edName.isEnabled = false
 
