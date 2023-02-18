@@ -17,7 +17,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/white">
 
             <EditText
                 android:id="@+id/edPass"
@@ -30,6 +31,7 @@
                 android:ems="10"
                 android:hint="Пароль"
                 android:inputType="textPassword"
+                android:textColor="@color/black"
                 android:textColorHint="@color/colourForRV"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -43,6 +45,8 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
+                android:background="@android:drawable/editbox_background"
+                android:backgroundTint="@color/ic_zametki_launcher_background"
                 android:text="Ввод"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

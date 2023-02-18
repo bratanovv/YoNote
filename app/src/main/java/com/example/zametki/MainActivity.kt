@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.zametki.databinding.ActivityMainBinding
 import com.example.zametki.db.DbItem
 import com.example.zametki.db.DbManager
 import com.example.zametki.db.DbViewAdapter
@@ -24,6 +25,8 @@ import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity() {
+    lateinit var bindingClass : ActivityMainBinding
+
 
     val dbManager = DbManager(this)
     val dbViewAdapter = DbViewAdapter(ArrayList(), this)
@@ -33,7 +36,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        bindingClass = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(bindingClass.root)
         init()
         initSearchView()
     }
@@ -137,7 +142,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 dbViewAdapter.removeItem(viewHolder.adapterPosition, dbManager)
-                dbList.removeAt(direction)
+                dbList.removeAt(viewHolder.position)
                 isEmptyDb(dbList)
                 Toast.makeText(this@MainActivity, "Заметка удалена", Toast.LENGTH_SHORT).show()
             }
@@ -174,7 +179,6 @@ class MainActivity : AppCompatActivity() {
                     .addActionIcon(R.drawable.ic_delete)
                     // .setActionIconTint(backgroundCol)
                     .addCornerRadius(1, 3)
-                    .addPadding(1, 3F, 4F, 3F)
                     .create()
                     .decorate()
                 super.onChildDraw(

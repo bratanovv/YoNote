@@ -2,4 +2,6 @@
     <string name="app_name">YoNote</string>
     <string name="app_ed_title_hint">Название</string>
     <string name="app_ed_desc_hint">Текст</string>
+    <string name="empty_msg">Пусто</string>
+    <string name="app_description_title">Заметки</string>
 </resources>

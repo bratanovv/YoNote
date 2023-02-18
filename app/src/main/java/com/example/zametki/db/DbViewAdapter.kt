@@ -21,7 +21,10 @@ class DbViewAdapter(list: ArrayList<DbItem>, context: Context) :
     var contextM = context
 
     class MyHolder(itemView: View, contextM: Context) : RecyclerView.ViewHolder(itemView) {
-        val tvTitle: TextView = itemView.findViewById(R.id.tvTitle)
+       // var bind: RcItemBinding = RcItemBinding.inflate(LayoutInflater.from(contextM))
+
+
+       val tvTitle: TextView = itemView.findViewById(R.id.tvTitle)
         val tvDate: TextView = itemView.findViewById(R.id.tvDate)
         val ivStar: ImageView = itemView.findViewById(R.id.ivStar)
         val ivLock: ImageView = itemView.findViewById(R.id.ivLock)
@@ -30,8 +33,8 @@ class DbViewAdapter(list: ArrayList<DbItem>, context: Context) :
         val contextV = contextM
 
         fun setData(item: DbItem) {
-
-            tvTitle.text = item.title
+            //bind.tvTitle.text = item.title
+           tvTitle.text = item.title
             tvDate.text = item.date.dropLast(3)
             if (item.star == 0)
                 ivStar.visibility = View.INVISIBLE

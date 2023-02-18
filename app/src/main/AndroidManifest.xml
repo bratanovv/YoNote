@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:usesCleartextTraffic="false"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,7 +16,9 @@
             android:name="com.example.zametki.EditActivity"
             android:exported="false"
             android:windowSoftInputMode="stateHidden"
-           />
+
+            />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
